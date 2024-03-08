@@ -177,10 +177,32 @@ echo '<br>';
 
 checkScope($globalVariable);
 
+echo '<br>';
+echo '<br>';
+
+
 ?>
 
 ・ファイルの読み込み
 <?php
+
+echo '<br>';
+
+require 'common.php';
+echo $commonVariable;
+
+echo '<br>';
+
+commonTest();
+
+echo '<br>';
+
+//マジック定数
+echo __DIR__;
+
+echo '<br>';
+
+echo __FILE__;
 
 ?>
 
