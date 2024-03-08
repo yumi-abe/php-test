@@ -110,8 +110,51 @@ echo '<br>';
 
 //配列に配列を追加する
 
+// http://html2php.starrypages.net/php/array-funcs
+//配列関数一覧
+
+$array = ['りんご','みかん'];
+
+array_push($array,'ぶどう','なし');
+
+echo '<pre>';
+var_dump($array);
+echo '</pre>';
+
+echo '<br>';
+
+?>
+
+・関数を自作する
+<?php
+
+echo '<br>';
+
+// camelcase
+$postalCode = '123-4567';
+
+function checkPostalCode($str){
+    $replaced = str_replace('-','',$str);
+    $length = strlen($replaced);
+
+    var_dump($length);
+
+    if($length === 7){
+        return true;
+    }
+    return false;
+}
+
+var_dump(checkPostalCode($postalCode));
+
+//snakecase
+// check_postal_code()
+
+
+
 
 
 ?>
+
 
 
