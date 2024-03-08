@@ -145,16 +145,43 @@ function checkPostalCode($str){
     return false;
 }
 
+echo '<br>';
+
 var_dump(checkPostalCode($postalCode));
 
 //snakecase
 // check_postal_code()
 
-
-
-
+echo '<br>';
 
 ?>
 
+・変数のスコープ
+<?php
+echo '<br>';
+
+$globalVariable = 'グローバル変数です';
+
+function checkScope($str){
+    $localVariable = 'ローカル変数です';
+    // global  $globalVariable;
+    echo $str;
+}
+
+echo $globalVariable;
+
+//関数の中で使用している変数は関数の中でしか使えない
+// echo $localVariable; 表示されない
+
+echo '<br>';
+
+checkScope($globalVariable);
+
+?>
+
+・ファイルの読み込み
+<?php
+
+?>
 
 
