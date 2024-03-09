@@ -1,12 +1,20 @@
 <?php
+
+header('X-FRAME-OPTIONS:DENY');
+
 //スーパーグローバル変数　phpは9種類ある
 //GET…URLの後ろに表示される　POST…表示されない（パスワードなどに）
 //連想配列
 
-if(!empty($_POST)){
-    echo "<pre>";
-    var_dump($_POST);
-    echo "</pre>";
+// if(!empty($_POST)){
+//     echo "<pre>";
+//     var_dump($_POST);
+//     echo "</pre>";
+// }
+
+function h($str)
+{
+	return htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
 }
 
 //入力・確認・完了 分ける場合…input.php, confirm.php, thanks.php
@@ -40,10 +48,10 @@ if(!empty($_POST['btn_submit'])){
 
 <form method="POST" action="input.php">
 氏名
-<input type="text" name="your_name" value="<?php if(!empty($_POST['your_name'])){echo $_POST['your_name'];} ?>">
+<input type="text" name="your_name" value="<?php if(!empty(h($_POST['your_name']))){echo h($_POST['your_name']);} ?>">
 <br>
 メールアドレス
-<input type="email" name="email" value="<?php if(!empty($_POST['email'])){echo $_POST['email'];} ?>">
+<input type="email" name="email" value="<?php if(!empty(h($_POST['email']))){echo h($_POST['email']);} ?>">
 <br>
 <input type="submit" name="btn_confirm" value="確認する">
 
@@ -55,15 +63,15 @@ if(!empty($_POST['btn_submit'])){
 
     <form method="POST" action="input.php">
     氏名
-    <?php echo $_POST['your_name']; ?>
+    <?php echo h($_POST['your_name']); ?>
     <br>
     メールアドレス
-    <?php echo $_POST['email']; ?>
+    <?php echo h($_POST['email']); ?>
     <br>
     <input type="submit" name="back" value="戻る">
     <input type="submit" name="btn_submit" value="送信する">
-    <input type="hidden" name="your_name" value="<?php echo $_POST['your_name']; ?>">
-    <input type="hidden" name="email" value="<?php echo $_POST['email']; ?>">
+    <input type="hidden" name="your_name" value="<?php echo h($_POST['your_name']); ?>">
+    <input type="hidden" name="email" value="<?php echo h($_POST['email']); ?>">
 
     </form>
 <?php endif; ?>
