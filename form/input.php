@@ -2,6 +2,8 @@
 
 //CSRF対策
 session_start();
+
+require 'validation.php';
 // クリックジャッキングを防ぐ
 header('X-FRAME-OPTIONS:DENY');
 
@@ -26,7 +28,9 @@ function h($str)
 
 $pageFlag = 0;
 
-if(!empty($_POST['btn_confirm'])){
+$errors = validation($_POST);
+
+if(!empty($_POST['btn_confirm']) && empty($errors)){
     $pageFlag = 1;
 }
 
@@ -59,6 +63,17 @@ if(!isset($_SESSION['csrfToken'])){
 $token = $_SESSION['csrfToken']
 ?>
 
+<?php if(!empty($errors) && !empty($_POST['btn_confirm'] )) : ?>
+<?php echo '<ul>' ;?>
+<?php 
+    foreach($errors as $error){
+        echo '<li>' . $error . '</li>';
+}
+?>
+<?php echo '</ul>' ;?>
+
+
+<?php endif ;?>
 
 <form method="POST" action="input.php">
 氏名
@@ -66,6 +81,7 @@ $token = $_SESSION['csrfToken']
 <br>
 メールアドレス
 <input type="email" name="email" value="<?php if(!empty($_POST['email'])){echo h($_POST['email']) ;} ?>">
+
 <br>
 ホームページ
 <input type="url" name="url" value="<?php if(!empty($_POST['url'])){echo h($_POST['url']) ;} ?>">
@@ -81,12 +97,24 @@ $token = $_SESSION['csrfToken']
 年齢
 <select name="age">
 <option value="">選択してください</option>
-      <option value="1">〜19歳</option>
-      <option value="2">20歳〜29歳</option>
-      <option value="3">30歳〜39歳</option>
-      <option value="4">40歳〜49歳</option>
-      <option value="5">50歳〜59歳</option>
-      <option value="6">60歳〜</option>
+      <option value="1" 
+      <?php if(isset($_POST['age']) && $_POST['age'] === "1")
+      {echo "selected";} ?>>〜19歳</option>
+      <option value="2"
+      <?php if(isset($_POST['age']) && $_POST['age'] === "2")
+      {echo "selected";} ?>>20歳〜29歳</option>
+      <option value="3" 
+      <?php if(isset($_POST['age']) && $_POST['age'] === "3")
+      {echo "selected";} ?>>30歳〜39歳</option>
+      <option value="4" 
+      <?php if(isset($_POST['age']) && $_POST['age'] === "4")
+      {echo "selected";} ?>>40歳〜49歳</option>
+      <option value="5" 
+      <?php if(isset($_POST['age']) && $_POST['age'] === "5")
+      {echo "selected";} ?>>50歳〜59歳</option>
+      <option value="6" 
+      <?php if(isset($_POST['age']) && $_POST['age'] === "6")
+      {echo "selected";} ?>>60歳〜</option>
 </select>
 <br>
 お問い合わせ内容
@@ -140,6 +168,7 @@ $token = $_SESSION['csrfToken']
     <input type="submit" name="back" value="戻る">
     <input type="submit" name="btn_submit" value="送信する">
     <input type="hidden" name="your_name" value="<?php echo h($_POST['your_name']); ?>">
+    <input type="hidden" name="email" value="<?php echo h($_POST['email']); ?>">
     <input type="hidden" name="url" value="<?php echo h($_POST['url']); ?>">
     <input type="hidden" name="gender" value="<?php echo h($_POST['gender']); ?>">
     <input type="hidden" name="age" value="<?php echo h($_POST['age']); ?>">
