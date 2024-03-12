@@ -26,7 +26,7 @@ if(empty($request['age']) || 6 < $request['age']){
     $errors[] = '「年齢」は必須です。';
 }
 
-if(empty($request['contact']) || 20 < mb_strlen($request['contact'])){
+if(empty($request['contact']) || 200 < mb_strlen($request['contact'])){
     $errors[] = '「お問い合わせ内容」は必須です。200文字以内で入力してください。';
 }
 

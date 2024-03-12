@@ -137,9 +137,7 @@ $token = $_SESSION['csrfToken']
 
             <div class="form-group">
                 <label for="contact">お問い合わせ内容</label>
-                <textarea class="form-control" id="contact" row="3" name="contact">
-                <?php if(!empty($_POST['contact'])){echo h($_POST['contact']) ;} ?>
-            </textarea>
+                <textarea class="form-control" id="contact" row="3" name="contact"><?php if(!empty($_POST['contact'])){echo h($_POST['contact']) ;} ?></textarea>
             </div>
                 
             <div class="form-check">
