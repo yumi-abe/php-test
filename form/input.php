@@ -12,9 +12,9 @@ header('X-FRAME-OPTIONS:DENY');
 //連想配列
 
 if(!empty($_POST)){
-    echo "<pre>";
-    var_dump($_POST);
-    echo "</pre>";
+    echo '<pre>';
+    var_dump($_POST) ;
+    echo '</pre>';
 }
 
 function h($str)
@@ -22,12 +22,12 @@ function h($str)
 	return htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
 }
 
+
 //入力・確認・完了 分ける場合…input.php, confirm.php, thanks.php
 //CSRF 偽物のinput.php->悪意あるページ
 //分けない場合…input.php if文を使って切り替える
 
 $pageFlag = 0;
-
 $errors = validation($_POST);
 
 if(!empty($_POST['btn_confirm']) && empty($errors)){
@@ -42,12 +42,17 @@ if(!empty($_POST['btn_submit'])){
 
 ?>
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
 </head>
 <body>
 
@@ -75,58 +80,80 @@ $token = $_SESSION['csrfToken']
 
 <?php endif ;?>
 
-<form method="POST" action="input.php">
-氏名
-<input type="text" name="your_name" value="<?php if(!empty($_POST['your_name'])){echo h($_POST['your_name']) ;} ?>">
-<br>
-メールアドレス
-<input type="email" name="email" value="<?php if(!empty($_POST['email'])){echo h($_POST['email']) ;} ?>">
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <form method="POST" action="input.php">
+            <div class="form-group">
+                <label for="your_name">氏名</label>
+                <input type="text" class="form-control" id="your_name" name="your_name" value="<?php if(!empty($_POST['your_name'])){echo h($_POST['your_name']) ;} ?>" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">メールアドレス</label>
+                <input type="email" class="form-control" id="email" name="email" value="<?php if(!empty($_POST['email'])){echo h($_POST['email']) ;} ?>" required>
+            </div>
 
-<br>
-ホームページ
-<input type="url" name="url" value="<?php if(!empty($_POST['url'])){echo h($_POST['url']) ;} ?>">
-<br>
-性別
-<input type="radio" name="gender" value="0" 
-<?php if(isset($_POST['gender']) && $_POST['gender'] === "0" )
-{ echo "checked";} ?>>男性
-<input type="radio" name="gender" value="1" 
-<?php if(isset($_POST['gender']) && $_POST['gender'] === "1" )
-{ echo "checked";} ?>>女性
-<br>
-年齢
-<select name="age">
-<option value="">選択してください</option>
-      <option value="1" 
-      <?php if(isset($_POST['age']) && $_POST['age'] === "1")
-      {echo "selected";} ?>>〜19歳</option>
-      <option value="2"
-      <?php if(isset($_POST['age']) && $_POST['age'] === "2")
-      {echo "selected";} ?>>20歳〜29歳</option>
-      <option value="3" 
-      <?php if(isset($_POST['age']) && $_POST['age'] === "3")
-      {echo "selected";} ?>>30歳〜39歳</option>
-      <option value="4" 
-      <?php if(isset($_POST['age']) && $_POST['age'] === "4")
-      {echo "selected";} ?>>40歳〜49歳</option>
-      <option value="5" 
-      <?php if(isset($_POST['age']) && $_POST['age'] === "5")
-      {echo "selected";} ?>>50歳〜59歳</option>
-      <option value="6" 
-      <?php if(isset($_POST['age']) && $_POST['age'] === "6")
-      {echo "selected";} ?>>60歳〜</option>
-</select>
-<br>
-お問い合わせ内容
-<textarea name="contact">
-<?php if(!empty($_POST['contact'])){echo h($_POST['contact']);} ?>
-</textarea>
-<br>
-<input type="checkbox" name="caution" value="1">注意事項にチェックする
-<br>
-<input type="submit" name="btn_confirm" value="確認する">
-<input type="hidden" name ="csrf" value="<?php echo $token; ?>">
-</form>
+            <div class="form-group">
+                <label for="url">ホームページ</label>
+                <input type="url" class="form-control" id="url" name="url" value="<?php if(!empty($_POST['url'])){echo h($_POST['url']) ;} ?>">
+            </div>
+            性別
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="gender" id="gender1" value="0" 
+                <?php if(isset($_POST['gender']) && $_POST['gender'] === '0' )
+                { echo 'checked'; } ?>>
+                <label class="form-check-label">男性</label>
+                <input class="form-check-input" type="radio" name="gender" id="gender2" value="1"
+                <?php if(isset($_POST['gender']) && $_POST['gender'] === '1' )
+                { echo 'checked'; } ?>>
+                <label class="form-check-label">女性</label>
+            </div>
+            
+            <div class="form-group">
+                <label for="age">年齢</label>
+                <select class="form-control" id="age" name="age">
+                    <option value="">選択してください</option>
+                    <option value="1" 
+                    <?php if(isset($_POST['age']) && $_POST['age'] === "1")
+                    {echo "selected";} ?>>〜19歳</option>
+                    <option value="2"
+                    <?php if(isset($_POST['age']) && $_POST['age'] === "2")
+                    {echo "selected";} ?>>20歳〜29歳</option>
+                    <option value="3" 
+                    <?php if(isset($_POST['age']) && $_POST['age'] === "3")
+                    {echo "selected";} ?>>30歳〜39歳</option>
+                    <option value="4" 
+                    <?php if(isset($_POST['age']) && $_POST['age'] === "4")
+                    {echo "selected";} ?>>40歳〜49歳</option>
+                    <option value="5" 
+                    <?php if(isset($_POST['age']) && $_POST['age'] === "5")
+                    {echo "selected";} ?>>50歳〜59歳</option>
+                    <option value="6" 
+                    <?php if(isset($_POST['age']) && $_POST['age'] === "6")
+                    {echo "selected";} ?>>60歳〜</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="contact">お問い合わせ内容</label>
+                <textarea class="form-control" id="contact" row="3" name="contact">
+                <?php if(!empty($_POST['contact'])){echo h($_POST['contact']) ;} ?>
+            </textarea>
+            </div>
+                
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="caution" name="caution" value="1">
+                <label class="form-check-label" for="caution">注意事項にチェックする</label>
+            </div>
+            <input class="btn btn-info" type="submit" name="btn_confirm" value="確認する">
+            <input type="hidden" name ="csrf" value="<?php echo $token; ?>">
+            </form>
+        </div>
+    </div>
+</div>
+
+
 <?php endif; ?>
 
 <!-- 確認画面 -->
@@ -197,7 +224,15 @@ $token = $_SESSION['csrfToken']
 
 
 
+    <!-- Optional JavaScript; choose one of the two! -->
 
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> -->
 
-</body>
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+   
+  </body>
 </html>
