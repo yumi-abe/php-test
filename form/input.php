@@ -210,6 +210,12 @@ $token = $_SESSION['csrfToken']
 <!-- csrf対策用のトークンが合っているか確認 -->
 <?php if($_POST['csrf'] === $_SESSION['csrfToken']) :?>
 
+<?php require '../mainte/insert.php';
+
+insertContact($_POST);
+
+?>
+
 送信が完了しました。
 
 <!-- csrf対策用のトークンを削除 -->
