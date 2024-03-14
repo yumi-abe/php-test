@@ -1,0 +1,15 @@
+{
+    "name": "yumib/composer_test",
+    "autoload": {
+        "psr-4": {
+            "src\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "yumi-abe",
+            "email": "yumibuhibuhi0610@gmail.com"
+        }
+    ],
+    "require": {}
+}
