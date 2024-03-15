@@ -11,5 +11,7 @@
             "email": "yumibuhibuhi0610@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "nesbot/carbon": "^3.1"
+    }
 }
